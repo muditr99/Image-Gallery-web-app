@@ -9,18 +9,29 @@ const App = () => {
   const [photos, setPhotos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [clientId, setClientId] = useState("7GGryYP7_gcc-CnppyhdBj_A8eoXETvCQF0ZTiAzqPs");
+  const [type, setType] = useState("");
 
-  const fetchData = async () => {
+  const fetchData = async (input) => {
     
     const response = await axios.get(
-      `https://api.unsplash.com/search/photos?page=1&query=boat+&client_id=${clientId}&per_page=20`
+      `https://api.unsplash.com/search/photos?page=1&query=${input}+&client_id=${clientId}&per_page=20`
       );
     // console.log(response);
     const data = await response.data;
-    // console.log(data);
+     console.log(data);
     // console.log(data.results);
     setPhotos(data.results);
     setLoading(false);
+  }
+
+  const handleChange = (event) => {
+    // console.log(event.target.value)
+     setType(event.target.value);
+   }
+
+   const handleSubmit = (event) => {
+     event.preventDefault();
+     fetchData(type);
   }
 
   useEffect(() => {
@@ -42,7 +53,7 @@ const App = () => {
 
   return (
     <Container>
-      <Input />
+      <Input change = {handleChange} />
       <Gallery photos = {photos} />
     </Container>
   )
