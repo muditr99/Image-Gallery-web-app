@@ -14,7 +14,7 @@ const App = () => {
   const fetchData = async (input) => {
     
     const response = await axios.get(
-      `https://api.unsplash.com/search/photos?page=1&query=${input}+&client_id=${clientId}&per_page=20`
+      `https://api.unsplash.com/search/photos?page=1&query=${!input ? 'dog' : input}+&client_id=${clientId}&per_page=20`
       );
     // console.log(response);
     const data = await response.data;
@@ -53,7 +53,7 @@ const App = () => {
 
   return (
     <Container>
-      <Input change = {handleChange} />
+      <Input change = {handleChange} submit={handleSubmit}/>
       <Gallery photos = {photos} />
     </Container>
   )
